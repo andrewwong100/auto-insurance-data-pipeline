@@ -1,0 +1,2 @@
+policy_change_id,policy_id,operation,source_version,effective_date,change_type,old_coverage_type,new_coverage_type,old_annual_premium,new_annual_premium,source_system,source_updated_at
+PCH-20260111-000001,POL-0000001,UPDATE,2,2026-01-11,COVERAGE_AND_PREMIUM,Standard,Comprehensive,1215.63,1398.00,SYNTHETIC_POLICY_ADMIN,2026-01-11T01:00:00+00:00

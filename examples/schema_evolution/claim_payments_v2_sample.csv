@@ -1,0 +1,2 @@
+payment_id,claim_id,policy_id,payment_date,payment_type,payee_type,amount,currency,source_event_id,source_version,source_system,created_at,updated_at,payment_method
+PAY-V2-DEMO-000001,CLM-000000015,POL-0001515,2026-01-11,INDEMNITY,REPAIR_SHOP,250.00,CAD,EVT-9C66F226C459D6DD,4,SYNTHETIC_CLAIMS_PAYMENTS,2026-01-11T06:00:00+00:00,2026-01-11T06:00:00+00:00,EFT
