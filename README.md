@@ -22,6 +22,35 @@ flowchart LR
 
 The Airflow DAG processes one `process_date` per run. Its four Silver branches run independently after their corresponding Bronze files arrive. Gold begins only when all four branches succeed. For a historical backfill, dates are submitted sequentially so each Gold result represents the cumulative period from `2026-01-01` through that run's process date.
 
+## Airflow DAG execution graph
+
+```mermaid
+flowchart TD
+    A[Start] --> B[Validate process date]
+
+    B --> C1[Wait for claims file]
+    B --> C2[Wait for exposure file]
+    B --> C3[Wait for payments file]
+    B --> C4[Wait for expenses file]
+
+    C1 --> D1[Claims Bronze to Silver Glue job]
+    C2 --> D2[Exposure Bronze to Silver Glue job]
+    C3 --> D3[Payments Bronze to Silver Glue job]
+    C4 --> D4[Expenses Bronze to Silver Glue job]
+
+    D3 --> E3[Register payments partition]
+    D4 --> E4[Register expenses partition]
+
+    D1 --> F[Silver to Gold Glue job]
+    D2 --> F
+    E3 --> F
+    E4 --> F
+
+    F --> G[Complete]
+```
+
+One DAG run processes one date. The four dataset branches can run in parallel, but the cumulative Gold job waits for all four branches. Payment and expense partitions are registered explicitly because those existing Glue jobs write Parquet but do not update the Data Catalog. The claims and exposure jobs use their existing catalog-management behavior, so the DAG does not add duplicate registration tasks for them.
+
 ## Datasets
 
 | Dataset | Grain | Purpose |
